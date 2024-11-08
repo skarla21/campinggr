@@ -62,15 +62,15 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // Secure cookies only in production
+    // secure: process.env.NODE_ENV === 'production', // Secure cookies only in production
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
 };
 app.use(session(sessionConfig));
 app.use(flash());
-app.use(helmet());  // 11 protective middleware
-app.use(helmet.contentSecurityPolicy(contentSP));  // customize contentSecurityPolicy
+// app.use(helmet());  // 11 protective middleware
+// app.use(helmet.contentSecurityPolicy(contentSP));  // customize contentSecurityPolicy
 
 app.use(passport.initialize());
 app.use(passport.session());
