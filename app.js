@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 
 const store = MongoStore.create({
-  mongoUrl: dbUrl,
+  mongoUrl: process.env.DB_URL,                  //prod: process.env.DB_URL || dev: dbUrl
   touchAfter: 24 * 60 * 60,
   crypto: {
     secret: 'put-secret-here'
