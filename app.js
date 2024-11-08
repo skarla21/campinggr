@@ -47,7 +47,7 @@ const store = MongoStore.create({
   mongoUrl: process.env.DB_URL,                  //prod: process.env.DB_URL || dev: dbUrl
   touchAfter: 24 * 60 * 60,
   crypto: {
-    secret: 'put-secret-here'
+    secret: process.env.SECRET
   }
 });
 store.on("error", function (e) {
@@ -57,12 +57,12 @@ store.on("error", function (e) {
 const sessionConfig = {
   store,
   name: 'session',
-  secret: 'put-secret-here',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    // secure: true,
+    secure: true,    //only in prod
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
