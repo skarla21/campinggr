@@ -23,11 +23,10 @@ const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
 
-// const dbUrl = process.env.DB_URL;  //prod
-const dbUrl = "mongodb://127.0.0.1:27017/campinggr"; //dev
+// const dbUrl = "mongodb://127.0.0.1:27017/campinggr"; //dev
 mongoose.set("strictQuery", true);
 mongoose
-  .connect(dbUrl)
+  .connect(process.env.DB_URL)  //prod: process.env.DB_URL || dev: dbUrl
   .then(() => {
     console.log("Database connected.");
   })
