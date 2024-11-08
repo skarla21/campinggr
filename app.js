@@ -62,7 +62,7 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    secure: true,                                   //only in prod
+    secure: process.env.NODE_ENV === 'production', // Secure cookies only in production
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
@@ -86,6 +86,12 @@ app.use((req, res, next) => {
   next();
 })
 
+app.use((req, res, next) => {
+  console.log("Session ID:", req.sessionID);
+  console.log("Session:", req.session);
+  next();
+});
+
 
 app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/reviews', reviewRoutes);
@@ -107,5 +113,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log("Serving on port 3000.");
+  console.log(`Serving on port ${process.env.PORT}.`);
 });
