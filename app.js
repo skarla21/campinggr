@@ -26,7 +26,7 @@ const userRoutes = require("./routes/users");
 // const dbUrl = "mongodb://127.0.0.1:27017/campinggr"; //dev
 mongoose.set("strictQuery", true);
 mongoose
-  .connect(process.env.DB_URL)  //prod: process.env.DB_URL || dev: dbUrl
+  .connect(process.env.DB_URL)                   //prod: process.env.DB_URL || dev: dbUrl
   .then(() => {
     console.log("Database connected.");
   })
@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 
 const store = MongoStore.create({
-  mongoUrl: process.env.DB_URL,                  //prod: process.env.DB_URL || dev: dbUrl
+  mongoUrl: process.env.DB_URL,                   //prod: process.env.DB_URL || dev: dbUrl
   touchAfter: 24 * 60 * 60,
   crypto: {
     secret: process.env.SECRET
@@ -62,7 +62,7 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    secure: true,    //only in prod
+    secure: true,                                   //only in prod
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
@@ -106,6 +106,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render('error', { err });
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Serving on port 3000.");
 });
