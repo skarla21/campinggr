@@ -1,0 +1,61 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+      <div class="card shadow">
+        <img
+          crossorigin="anonymous"
+          src="https://res.cloudinary.com/dlm8y6xd6/image/upload/v1730994499/camping_default_mkky4k.jpg"
+          alt=""
+          class="card-img-top"
+        />
+        <div class="card-body">
+          <!-- <h5 class="card-title">Register</h5> -->
+          <form
+            action="/register"
+            method="POST"
+            class="validated-form"
+            novalidate
+          >
+            <div class="mb-3">
+              <label class="form-label" for="username">Username</label>
+              <input
+                class="form-control"
+                type="text"
+                id="username"
+                name="username"
+                autofocus
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="email">Email</label>
+              <input
+                class="form-control"
+                type="email"
+                id="email"
+                name="email"
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="password">Password</label>
+              <input
+                class="form-control"
+                type="password"
+                id="password"
+                name="password"
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+            <button class="btn btn-info mb-1">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
