@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
+const port = process.env.PORT;
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
@@ -61,7 +62,7 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    // secure: process.env.NODE_ENV === 'production', // Secure cookies only in production
+    secure: process.env.NODE_ENV === 'production', // Secure cookies only in production
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
@@ -104,6 +105,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render('error', { err });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Serving on port ${process.env.PORT}.`);
+app.listen(port, () => {
+  console.log(`Serving on port ${port}.`);
 });
