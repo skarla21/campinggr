@@ -23,10 +23,9 @@ const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
 
-// const dbUrl = "mongodb://127.0.0.1:27017/campinggr"; //dev
 mongoose.set("strictQuery", true);
 mongoose
-  .connect(process.env.DB_URL)                   //prod: process.env.DB_URL || dev: dbUrl
+  .connect(process.env.local_DB_URL || process.env.DB_URL)
   .then(() => {
     console.log("Database connected.");
   })
@@ -44,7 +43,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 
 const store = MongoStore.create({
-  mongoUrl: process.env.DB_URL,                   //prod: process.env.DB_URL || dev: dbUrl
+  mongoUrl: process.env.local_DB_URL || process.env.DB_URL,
   touchAfter: 24 * 60 * 60,
   crypto: {
     secret: process.env.SECRET
@@ -86,17 +85,10 @@ app.use((req, res, next) => {
   next();
 })
 
-app.use((req, res, next) => {
-  console.log("Session ID:", req.sessionID);
-  console.log("Session:", req.session);
-  next();
-});
-
 
 app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/reviews', reviewRoutes);
 app.use('/', userRoutes);
-
 
 app.get("/", (req, res) => {
   res.render("home");
