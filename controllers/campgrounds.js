@@ -1,6 +1,5 @@
 const Campground = require("../models/campground");
 const { cloudinary } = require("../cloudinary");
-const moment = require('moment');
 
 //google geocoding api
 const axios = require("axios");
@@ -75,8 +74,7 @@ module.exports.showCampground = async (req, res) => {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');
     }
-    const lastUpdated = moment(campground.updatedAt).fromNow();
-    res.render("campgrounds/show", { campground, lastUpdated });
+    res.render("campgrounds/show", { campground });
 };
 
 module.exports.renderEditForm = async (req, res) => {

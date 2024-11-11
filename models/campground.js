@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Review = require('./review');
+const moment = require('moment');
 const Schema = mongoose.Schema;
 const { cloudinary } = require("../cloudinary");
 
@@ -46,6 +47,14 @@ campgroundSchema.virtual('properties.popUpMarkup').get(function () {
   return `
     <strong><a href="/campgrounds/${this._id}">${this.title}</a><strong>
     <p>${this.description.substring(0, 40)}...</p>`;
+});
+
+campgroundSchema.virtual('properties.createdAt').get(function () {
+  return moment(this.createdAt).fromNow();
+});
+
+campgroundSchema.virtual('properties.lastUpdated').get(function () {
+  return moment(this.updatedAt).fromNow();
 });
 
 

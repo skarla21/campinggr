@@ -7,18 +7,10 @@ const { validateReview, isLoggedIn, isReviewAuthor } = require('../middleware');
 
 router.post("/", isLoggedIn, validateReview, catchAsync(reviews.createReview));
 
-router.delete("/:reviewId", isLoggedIn, isReviewAuthor, catchAsync(reviews.deleteReview));
+router.get("/:reviewId/edit", isLoggedIn, isReviewAuthor, catchAsync(reviews.editReview));
+
+router.route("/:reviewId")
+    .put(isLoggedIn, isReviewAuthor, validateReview, catchAsync(reviews.updateReview))
+    .delete(isLoggedIn, isReviewAuthor, catchAsync(reviews.deleteReview));
 
 module.exports = router;
-
-// router.put("/:reviewId", isLoggedIn, isReviewAuthor, validateReview, catchAsync(async (req, res) => {
-//     const { id, reviewId } = req.params;
-//     const updatedReview = {
-//         body: req.body.review.body.trim(),
-//         rating: req.body.review.rating,
-//         author: req.user._id
-//     };
-//     await Review.findByIdAndUpdate(reviewId, updatedReview);
-//     req.flash('success', 'Successfully updated review!');
-//     res.redirect(`/campgrounds/${id}`);
-// }));
