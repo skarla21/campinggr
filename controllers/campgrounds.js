@@ -4,7 +4,7 @@ const { cloudinary } = require("../cloudinary");
 //google geocoding api
 const axios = require("axios");
 const googleApiKey = process.env.GOOGLE_GEOCODING_API_KEY;
-// //mapbox geocoding api
+//mapbox geocoding api
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mbxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mbxToken });
