@@ -11,6 +11,7 @@ const ejsMate = require("ejs-mate");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
+const multer = require('multer');
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
 const passport = require("passport");
@@ -100,9 +101,12 @@ app.all(/(.*)/, (req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-  const { statusCode = 500 } = err;
-  if (!err.message) err.message = "Something Went Wrong!"
-  res.status(statusCode).render('error', { err });
+  if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
+    err.statusCode = 413;
+    err.message = 'Exceeded File Size Limit (2MB)';
+  }
+  if (!err.message) err.message = "Something Went Wrong!";
+  res.status(err.statusCode || 500).render('error', { err });
 });
 
 app.listen(port, () => {

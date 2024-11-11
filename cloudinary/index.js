@@ -11,11 +11,19 @@ const storage = new CloudinaryStorage({
     cloudinary,
     params: {
         folder: 'campinggr',
-        allowedFormats: ['jpeg', 'png', 'jpg']
+        allowedFormats: ['jpeg', 'png', 'jpg'],
+        transformation: [
+            { width: 1024, height: 1024, crop: 'limit', quality: 'auto' }
+        ]
     }
 });
 
+const limits = {
+    fileSize: 2 * 1024 * 1024 // limit file size to 2MB
+}
+
 module.exports = {
     cloudinary,
-    storage
+    storage,
+    limits
 };
