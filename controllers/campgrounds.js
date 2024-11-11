@@ -1,13 +1,14 @@
 const Campground = require("../models/campground");
 const { cloudinary } = require("../cloudinary");
+const moment = require('moment');
 
 //google geocoding api
 const axios = require("axios");
 const googleApiKey = process.env.GOOGLE_GEOCODING_API_KEY;
-//mapbox geocoding api
-const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-const mbxToken = process.env.MAPBOX_TOKEN;
-const geocoder = mbxGeocoding({ accessToken: mbxToken });
+// //mapbox geocoding api
+// const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+// const mbxToken = process.env.MAPBOX_TOKEN;
+// const geocoder = mbxGeocoding({ accessToken: mbxToken });
 
 
 module.exports.index = async (req, res) => {
@@ -74,7 +75,8 @@ module.exports.showCampground = async (req, res) => {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');
     }
-    res.render("campgrounds/show", { campground });
+    const lastUpdated = moment(campground.updatedAt).fromNow();
+    res.render("campgrounds/show", { campground, lastUpdated });
 };
 
 module.exports.renderEditForm = async (req, res) => {

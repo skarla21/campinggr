@@ -3,7 +3,10 @@ const Review = require('./review');
 const Schema = mongoose.Schema;
 const { cloudinary } = require("../cloudinary");
 
-const opts = { toJSON: { virtuals: true } };
+const opts = {
+  toJSON: { virtuals: true },
+  timestamps: true
+};
 
 const campgroundSchema = new Schema({
   title: String,
