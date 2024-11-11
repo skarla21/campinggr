@@ -1,6 +1,7 @@
 const { campgroundSchema, reviewSchema } = require('./schemas.js');
 const Campground = require("./models/campground");
 const Review = require("./models/review");
+const { cloudinary } = require("./cloudinary");
 const ExpressError = require('./utils/ExpressError');
 
 
@@ -48,9 +49,14 @@ module.exports.storeReturnTo = (req, res, next) => {
     next();
 }
 
-module.exports.validateCampground = (req, res, next) => {
+module.exports.validateCampground = async (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
     if (error) {
+        if (req.files) {
+            req.files.forEach(async (f) => {
+                await cloudinary.uploader.destroy(f.filename);
+            })
+        }
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400);
     } else {
