@@ -1,0 +1,37 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2>User Profile</h2>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div><strong>Username:</strong> <%= currentUser.username %></div>
+            <a
+              href="/profile/edit/username"
+              class="btn btn-outline-primary btn-sm"
+              >Change</a
+            >
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div><strong>Email:</strong> <%= currentUser.email %></div>
+            <a href="/profile/edit/email" class="btn btn-outline-primary btn-sm"
+              >Change</a
+            >
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div><strong>Password:</strong> ••••••••</div>
+            <a
+              href="/profile/edit/password"
+              class="btn btn-outline-primary btn-sm"
+              >Change</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

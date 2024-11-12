@@ -1,0 +1,62 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2>Edit Username</h2>
+        </div>
+        <div class="card-body">
+          <form
+            action="/profile/edit/username?_method=PUT"
+            method="POST"
+            class="validated-form mb-2"
+            novalidate
+          >
+            <div class="mb-3">
+              <label class="form-label"
+                ><strong>Current Username:</strong></label
+              >
+              <p><%= currentUser.username %></p>
+            </div>
+            <div class="mb-3">
+              <label for="username" class="form-label"
+                ><strong>New Username</strong></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
+                required
+                placeholder="Enter new username"
+              />
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label"
+                ><strong>Confirm Password</strong></label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                required
+                placeholder="Enter your password to confirm"
+              />
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Change Username
+            </button>
+          </form>
+          <div>
+            <a class="btn btn-danger btn-sm" href="/profile">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

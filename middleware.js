@@ -1,6 +1,8 @@
 const { campgroundSchema, reviewSchema } = require('./schemas.js');
 const Campground = require("./models/campground");
 const Review = require("./models/review");
+const User = require("./models/user");
+const passport = require("passport");
 const { cloudinary } = require("./cloudinary");
 const ExpressError = require('./utils/ExpressError');
 
@@ -13,6 +15,59 @@ module.exports.isLoggedIn = (req, res, next) => {
     }
     next();
 }
+
+module.exports.checkPassword = (req, res, next) => {
+    const { password } = req.body;
+    const { username } = res.locals.currentUser;
+    // to determine the redirect
+    const userInputUser = req.body.username;
+    const userInputEmail = req.body.email;
+
+    // re-authenticate the user with the provided password
+    passport.authenticate("local", (err, user, info) => {
+        if (err) {
+            req.flash("error", "An error occurred during authentication.");
+            if (userInputUser) {
+                return res.redirect("/profile/edit/username");
+            } else if (userInputEmail) {
+                return res.redirect("/profile/edit/email");
+            } else {
+                return res.redirect("/profile/edit/password");
+            }
+        }
+        if (!user) {
+            req.flash("error", "Incorrect password!");
+            if (userInputUser) {
+                return res.redirect("/profile/edit/username");
+            } else if (userInputEmail) {
+                return res.redirect("/profile/edit/email");
+            } else {
+                return res.redirect("/profile/edit/password");
+            }
+        }
+        next();
+    })({ body: { username, password } }); // pass `username` and `password` to authenticate
+};
+
+module.exports.checkUsernameAvailability = async (req, res, next) => {
+    const { username } = req.body;
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+        req.flash("error", "Username already taken. Please choose a different one.");
+        return res.redirect("/profile/edit/username");
+    }
+    next();
+};
+
+module.exports.checkEmailAvailability = async (req, res, next) => {
+    const { email } = req.body;
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+        req.flash("error", "Email already in use. Please choose a different one.");
+        return res.redirect("/profile/edit/email");
+    }
+    next();
+};
 
 module.exports.isAuthor = async (req, res, next) => {
     const { id } = req.params;

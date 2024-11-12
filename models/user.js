@@ -8,6 +8,7 @@ const UserSchema = new Schema({
         required: true,
         unique: true
     }
+    // ref to reviews & campgrounds
 });
 UserSchema.plugin(passportLocalMongoose);
 
