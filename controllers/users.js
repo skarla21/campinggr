@@ -13,7 +13,7 @@ module.exports.register = async (req, res, next) => {
             if (err) return next(err);
             req.flash('success', 'Welcome to camping.gr!');
             res.redirect('/campgrounds');
-        })
+        });
     } catch (e) {
         req.flash('error', e.message);
         res.redirect('/register');
@@ -38,7 +38,11 @@ module.exports.logout = (req, res, next) => {
     });
 };
 
-module.exports.showProfile = (req, res) => {
+module.exports.showProfile = async (req, res) => {
+    const populatedUser = await User.findById(res.locals.currentUser._id)
+        .populate('campgrounds')
+        .populate({ path: 'reviews', populate: { path: 'campground' } });
+    res.locals.currentUser = populatedUser;
     res.render('users/show');
 };
 

@@ -20,7 +20,7 @@ const storage = new CloudinaryStorage({
 
 const limits = {
     fileSize: 2 * 1024 * 1024 // limit file size to 2MB
-}
+};
 
 module.exports = {
     cloudinary,

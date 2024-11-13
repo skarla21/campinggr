@@ -1,4 +1,5 @@
 <% layout("layouts/boilerplate") %>
+<link rel="stylesheet" href="/stylesheets/stars.css" />
 
 <div class="container mt-5">
   <div class="row justify-content-center">
@@ -56,6 +57,93 @@
           </form>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3>Your Campgrounds</h3>
+    </div>
+    <div class="card-body">
+      <% if (currentUser.campgrounds && currentUser.campgrounds.length > 0) { %>
+      <% currentUser.campgrounds.forEach(campground => { %>
+      <div class="card mb-3">
+        <div class="row">
+          <div class="col-md-4">
+            <% if(campground.images.length) { %>
+            <img
+              crossorigin="anonymous"
+              class="img-fluid"
+              alt=""
+              src="<%= campground.images[0].url %>"
+            />
+            <% } else { %>
+            <img
+              crossorigin="anonymous"
+              class="img-fluid"
+              src="https://res.cloudinary.com/dlm8y6xd6/image/upload/v1730994499/camping_default_mkky4k.jpg"
+              alt=""
+            />
+            <% } %>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <a href="/campgrounds/<%= campground._id %>">
+                <h5 class="card-title"><%= campground.title %></h5>
+              </a>
+              <p class="card-text"><%= campground.description %></p>
+              <p class="card-text">
+                <medium class="text-secondary"
+                  ><%= campground.location %></medium
+                >
+              </p>
+              <p class="card-text">
+                <small class="text-secondary"
+                  ><i><%= campground.properties.createdAt %></i></small
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }) } else { %>
+      <p><i>You have not created any campgrounds yet.</i></p>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3>Your Reviews</h3>
+    </div>
+    <div class="card-body">
+      <!-- prettier-ignore -->
+      <% if (currentUser.reviews && currentUser.reviews.length > 0) { %> 
+      <% currentUser.reviews.forEach(review => { %>
+      <div class="mb-3 border-bottom">
+        <span>
+          <h5 class="d-inline">
+            <a
+              class="d-inline"
+              href="/campgrounds/<%= review.campground._id %>"
+            >
+              <%= review.campground.title %>
+            </a>
+          </h5>
+          <span class="card-text text-secondary">
+            - <%= review.properties.lastUpdated %>
+          </span>
+        </span>
+        <p class="starability-result mt-2" data-rating="<%= review.rating %>">
+          Rated: <%= review.rating %> stars
+        </p>
+        <p><%= review.body %></p>
+      </div>
+      <% }) } else { %>
+      <p><i>You have not left any reviews yet.</i></p>
+      <% } %>
     </div>
   </div>
 </div>

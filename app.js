@@ -85,7 +85,7 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   res.locals.currentUser = req.user;
   next();
-})
+});
 
 
 app.use('/campgrounds', campgroundRoutes);
@@ -97,8 +97,8 @@ app.get("/", (req, res) => {
 });
 
 app.all(/(.*)/, (req, res, next) => {
-  next(new ExpressError('Page Not Found :(', 404))
-})
+  next(new ExpressError('Page Not Found :(', 404));
+});
 
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
