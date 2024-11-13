@@ -31,6 +31,30 @@
             >
           </div>
         </div>
+        <div class="card-footer">
+          <form
+            action="/profile?_method=DELETE"
+            method="POST"
+            class="validated-form d-flex align-items-center justify-content-start"
+            novalidate
+          >
+            <button type="submit" class="btn btn-danger me-3">
+              Delete Profile
+            </button>
+            <div class="form-check d-inline-flex align-items-center">
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                id="confirmDelete"
+                name="confirmDelete"
+                required
+              />
+              <label class="form-check-label" for="confirmDelete">
+                Are you sure? This action cannot be reverted.
+              </label>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

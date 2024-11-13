@@ -100,3 +100,12 @@ module.exports.editPassword = async (req, res, next) => {
         });
     });
 };
+
+module.exports.deleteProfile = async (req, res, next) => {
+    await User.findByIdAndDelete(req.user._id);
+    req.logout(async err => {
+        if (err) return next(err);
+        req.flash('success', 'User deleted!');
+        res.redirect('/campgrounds');
+    });
+};

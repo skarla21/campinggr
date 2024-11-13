@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Review = require('./review');
 const moment = require('moment');
 const Schema = mongoose.Schema;
 const { cloudinary } = require("../cloudinary");
@@ -58,14 +57,27 @@ campgroundSchema.virtual('properties.lastUpdated').get(function () {
 });
 
 
-
-campgroundSchema.post("findOneAndDelete", async function (doc) {
-  if (doc) {
-    await Review.deleteMany({ _id: { $in: doc.reviews } });
-    for (let img of doc.images) {
-      await cloudinary.uploader.destroy(img.filename);
+campgroundSchema.pre("findOneAndDelete", async function (next) {
+  const Review = require('./review');
+  const User = require('./user');
+  const campgroundId = this.getQuery()._id;
+  const campgroundDoc = await this.model.findById(campgroundId)
+    .populate("reviews");
+  for (let review of campgroundDoc.reviews) {
+    const reviewAuthor = await User.findById(review.author);
+    if (reviewAuthor) {
+      await reviewAuthor.updateOne({ $pull: { reviews: review._id } });
     }
+    await Review.findByIdAndDelete(review._id);
   }
+  const campAuthor = await User.findById(campgroundDoc.author); //if author user exists
+  if (campAuthor) {
+    await campAuthor.updateOne({ $pull: { campgrounds: campgroundDoc._id } })
+  }
+  for (let img of campgroundDoc.images) {
+    await cloudinary.uploader.destroy(img.filename);
+  }
+  next();
 });
 
 module.exports = mongoose.model("Campground", campgroundSchema);

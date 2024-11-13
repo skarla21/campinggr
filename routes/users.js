@@ -20,8 +20,8 @@ router.route('/login')
 router.get('/logout', users.logout);
 
 router.route('/profile')
-    .get(isLoggedIn, users.showProfile);
-// .delete(isLoggedIn, users.deleteProfile);
+    .get(isLoggedIn, users.showProfile)
+    .delete(isLoggedIn, catchAsync(users.deleteProfile));
 
 router.route('/profile/edit/username')
     .get(isLoggedIn, users.renderEditUsername)

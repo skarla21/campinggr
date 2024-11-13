@@ -1,4 +1,5 @@
 const Campground = require("../models/campground");
+const User = require("../models/user");
 const { cloudinary } = require("../cloudinary");
 
 //google geocoding api
@@ -57,6 +58,10 @@ module.exports.createCampground = async (req, res, next) => {
     campground.description = campground.description.trim();
     campground.author = req.user._id;
     await campground.save();
+
+    const user = await User.findById(req.user._id);
+    user.campgrounds.push(campground);
+    await user.save();
 
     if (images_flash_flag) req.flash('warning', 'Images limit: 10');
     req.flash('success', 'Successfully made a new campground!');
@@ -136,7 +141,7 @@ module.exports.updateCampground = async (req, res) => {
 
 module.exports.deleteCampground = async (req, res) => {
     const { id } = req.params;
-    await Campground.findByIdAndDelete(id); // mongoose middleware for reviews & images deletion
+    await Campground.findByIdAndDelete(id); // mongoose middleware for reviews & images deletion & users updates (the ones holding reviews & the one holding the campground)
     req.flash('success', 'Successfully deleted campground!');
     res.redirect("/campgrounds");
 };

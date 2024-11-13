@@ -70,24 +70,48 @@
           <%= campground.location %>
         </li>
         <li class="list-group-item text-secondary">
-          Submitted by <%= campground.author.username %>
+          Submitted by
+          <!-- prettier-ignore -->
+          <% if (campground.author)  { %>
+          <%= campground.author.username %>
+          <% } else { %>
+          <i>Removed User</i>
+          <% } %>
         </li>
         <li class="list-group-item"><%= campground.price %>€/night</li>
       </ul>
-      <% if( currentUser && campground.author.equals(currentUser._id)) { %>
+      <% if( currentUser && campground.author &&
+      campground.author.equals(currentUser._id)) { %>
       <div class="card-body">
         <a
-          class="card-link btn btn-info"
+          class="card-link btn btn-info mb-2"
           href="/campgrounds/<%= campground._id %>/edit"
           >Edit</a
         >
-        <form
-          class="d-inline"
-          action="/campgrounds/<%= campground._id %>?_method=DELETE"
-          method="POST"
-        >
-          <button class="btn btn-danger">Delete</button>
-        </form>
+        <div>
+          <form
+            action="/campgrounds/<%= campground._id %>?_method=DELETE"
+            method="POST"
+            class="validated-form d-flex align-items-center justify-content-start"
+            novalidate
+          >
+            <button type="submit" class="btn btn-danger me-3">
+              Delete Campground
+            </button>
+            <div class="form-check d-inline-flex align-items-center">
+              <input
+                class="form-check-input me-2"
+                type="checkbox"
+                id="confirmDelete"
+                name="confirmDelete"
+                required
+              />
+              <label class="form-check-label" for="confirmDelete">
+                Are you sure? This action cannot be reverted.
+              </label>
+            </div>
+          </form>
+        </div>
       </div>
       <% } %>
       <div class="card-footer text-secondary">
@@ -172,7 +196,12 @@
     <div class="card mb-3">
       <div class="card-body">
         <div class="mb-2">
+          <!-- prettier-ignore -->
+          <% if (review.author)  { %>
           <h5 class="card-title d-inline"><%= review.author.username %></h5>
+          <% } else { %>
+          <div class="card-title d-inline"><i>Removed User</i></div>
+          <% } %>
           <div class="card-text text-secondary d-inline">
             - <%= review.properties.lastUpdated %>
           </div>
@@ -181,7 +210,8 @@
           Rated: <%= review.rating %> stars
         </p>
         <p class="card-text"><%= review.body %></p>
-        <% if( currentUser && review.author.equals(currentUser._id)) { %>
+        <% if( currentUser && review.author &&
+        review.author.equals(currentUser._id)) { %>
         <a
           class="d-inline card-link btn btn-sm btn-info"
           href="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>/edit"
