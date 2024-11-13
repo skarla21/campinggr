@@ -10,7 +10,13 @@
         </div>
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-3">
-            <div><strong>Username:</strong> <%= currentUser.username %></div>
+            <div>
+              <strong>Username:</strong> <%= currentUser.username %>
+              <!-- prettier-ignore -->
+              <% if (currentUser.roles.includes('admin')) { %>
+              <strong>(admin)</strong>
+              <% } %>
+            </div>
             <a
               href="/profile/edit/username"
               class="btn btn-outline-primary btn-sm"

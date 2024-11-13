@@ -72,7 +72,7 @@ campgroundSchema.pre("findOneAndDelete", async function (next) {
   }
   const campAuthor = await User.findById(campgroundDoc.author); //if author user exists
   if (campAuthor) {
-    await campAuthor.updateOne({ $pull: { campgrounds: campgroundDoc._id } })
+    await campAuthor.updateOne({ $pull: { campgrounds: campgroundDoc._id } });
   }
   for (let img of campgroundDoc.images) {
     await cloudinary.uploader.destroy(img.filename);

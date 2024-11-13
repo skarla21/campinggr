@@ -14,7 +14,7 @@ module.exports.isLoggedIn = (req, res, next) => {
         return res.redirect('/login');
     }
     next();
-}
+};
 
 module.exports.checkPassword = (req, res, next) => {
     const { password } = req.body;
@@ -76,12 +76,19 @@ module.exports.isCampgroundAuthor = async (req, res, next) => {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');
     }
-    if (!campground.author.equals(req.user._id)) {
-        req.flash('error', 'You do not have permission to do that')
-        return res.redirect(`/campgrounds/${id}`);
+    if (campground.author) {
+        if (!campground.author.equals(req.user._id) && !req.user.roles.includes('admin')) {   //either author or role: admin
+            req.flash('error', 'You do not have permission to do that');
+            return res.redirect(`/campgrounds/${id}`);
+        }
+    } else {
+        if (!req.user.roles.includes('admin')) {
+            req.flash('error', 'You do not have permission to do that');
+            return res.redirect(`/campgrounds/${id}`);
+        }
     }
     next();
-}
+};
 
 module.exports.isReviewAuthor = async (req, res, next) => {
     const { id, reviewId } = req.params;
@@ -90,19 +97,26 @@ module.exports.isReviewAuthor = async (req, res, next) => {
         req.flash('error', 'Cannot find that review!');
         return res.redirect(`/campgrounds/${id}`);
     }
-    if (!review.author.equals(req.user._id)) {
-        req.flash('error', 'You do not have permission to do that')
-        return res.redirect(`/campgrounds/${id}`);
+    if (review.author) {
+        if (!review.author.equals(req.user._id) && !req.user.roles.includes('admin')) {   //either author or role: admin
+            req.flash('error', 'You do not have permission to do that');
+            return res.redirect(`/campgrounds/${id}`);
+        }
+    } else {
+        if (!req.user.roles.includes('admin')) {
+            req.flash('error', 'You do not have permission to do that');
+            return res.redirect(`/campgrounds/${id}`);
+        }
     }
     next();
-}
+};
 
 module.exports.storeReturnTo = (req, res, next) => {
     if (req.session.returnTo) {
         res.locals.returnTo = req.session.returnTo;
     }
     next();
-}
+};
 
 module.exports.validateCampground = async (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
@@ -110,9 +124,9 @@ module.exports.validateCampground = async (req, res, next) => {
         if (req.files) {
             req.files.forEach(async (f) => {
                 await cloudinary.uploader.destroy(f.filename);
-            })
+            });
         }
-        const msg = error.details.map(el => el.message).join(',')
+        const msg = error.details.map(el => el.message).join(',');
         throw new ExpressError(msg, 400);
     } else {
         next();
@@ -122,7 +136,7 @@ module.exports.validateCampground = async (req, res, next) => {
 module.exports.validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
     if (error) {
-        const msg = error.details.map(el => el.message).join(',')
+        const msg = error.details.map(el => el.message).join(',');
         throw new ExpressError(msg, 400);
     } else {
         next();

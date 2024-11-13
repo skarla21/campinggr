@@ -42,7 +42,7 @@ module.exports.createCampground = async (req, res, next) => {
     const geometry = {
         type: 'Point',
         coordinates: [coords.lng, coords.lat] // GeoJSON format [longitude, latitude]
-    }
+    };
     campground.geometry = geometry;
 
     let images_flash_flag = false;
@@ -109,7 +109,7 @@ module.exports.updateCampground = async (req, res) => {
         const geometry = {
             type: 'Point',
             coordinates: [coords.lng, coords.lat] // GeoJSON format [longitude, latitude]
-        }
+        };
         updatedInfo.location = req.body.campground.location;
         updatedInfo.geometry = geometry;
     }

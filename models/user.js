@@ -19,7 +19,11 @@ const UserSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Review"
         }
-    ]
+    ],
+    roles: [{
+        type: String,
+        enum: ['admin']    // for now role will be entered manually in database
+    }]
 });
 UserSchema.plugin(passportLocalMongoose);
 
