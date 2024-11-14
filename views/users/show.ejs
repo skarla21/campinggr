@@ -106,9 +106,8 @@
                 >
               </p>
               <p class="card-text">
-                <small class="text-secondary"
-                  ><i><%= campground.properties.createdAt %></i></small
-                >
+                <!-- prettier-ignore -->
+                <small class="text-secondary"><i>You added this campground <%= campground.properties.createdAt %>.</i></small>
               </p>
             </div>
           </div>
@@ -138,14 +137,27 @@
               <%= review.campground.title %>
             </a>
           </h5>
-          <span class="card-text text-secondary">
-            - <%= review.properties.lastUpdated %>
-          </span>
+          <!-- prettier-ignore -->
+          <span class="card-text text-secondary"><i>- You added this review <%= review.properties.lastUpdated %>.</i></span>
         </span>
         <p class="starability-result mt-2" data-rating="<%= review.rating %>">
           Rated: <%= review.rating %> stars
         </p>
         <p><%= review.body %></p>
+        <div class="review-buttons mb-3">
+          <a
+            class="d-inline card-link btn btn-sm btn-info"
+            href="/campgrounds/<%= review.campground._id %>/reviews/<%= review._id %>/edit"
+            >Edit</a
+          >
+          <form
+            class="d-inline"
+            action="/campgrounds/<%= review.campground._id %>/reviews/<%= review._id %>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </div>
       </div>
       <% }) } else { %>
       <p><i>You have not left any reviews yet.</i></p>

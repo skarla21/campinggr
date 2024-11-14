@@ -1,0 +1,41 @@
+#map-container {
+    position: fixed;
+    top: 56px; /* Adjusted based on navbar height */
+    bottom: 56px; /* Adjusted based on footer height */
+    left: 0;
+    width: 40%;
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+}
+  
+#cluster-map {
+    height: calc(100vh - 112px); /* Accounts for navbar and footer */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+  
+#campground-list {
+    margin-left: 40%; /* Align content to the right of the map */
+    padding: 1rem; /* Add padding for spacing */
+}
+  
+.card .row.g-0 {
+    align-items: flex-start; /* Aligns content to the top */
+}
+  
+.campground-img {
+    object-fit: cover; /* Ensures images fill the image space */
+    width: 100%;
+    height: 200px; /* Set consistent height for images */
+}
+  
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns content to the left */
+    justify-content: flex-start; /* Ensures content aligns to the top */
+    padding-top: 0.5rem; /* Adds slight padding */
+}
+  

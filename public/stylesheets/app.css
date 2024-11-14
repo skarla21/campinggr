@@ -30,3 +30,22 @@
   background-color: darkgray;
   opacity: 0.7;
 }
+
+.review-buttons {
+  display: flex;
+  align-items: center; /* Vertically aligns buttons */
+  gap: 0.5rem; /* Adds spacing between buttons */
+}
+
+.flash-message {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 1rem 2rem;
+  border-radius: 0.25rem;
+  min-width: 800px;
+  max-width: 80%;;
+  text-align: left;
+}
