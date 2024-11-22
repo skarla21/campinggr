@@ -1,25 +1,42 @@
 #cluster-map {
-    width: 100%;
-    height: 500px;
+  width: 100%;
+  height: 500px;
 }
 
 #map {
-    width: 100%;
-    height: 300px;
+  width: 100%;
+  height: 300px;
+}
+
+@media (min-width: 992px) {
+  .page-wrapper {
+    margin-left: 17.5%;
+    margin-right: 17.5%;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .page-wrapper {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 30px;
+  }
 }
 
 .carousel-img {
-    height: 400px;  /*fixed height*/
-    object-fit: contain;
-    object-position: center;
-}
-  
-.carousel-inner {
-    height: 400px; /* Matches the height of the images */
+  height: 400px; /*fixed height*/
+  object-fit: contain;
+  object-position: center;
 }
 
-.carousel-control-prev-icon, .carousel-control-next-icon {
-  background-color: gray; 
+.carousel-inner {
+  height: 400px; /* matches the height of the images */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: gray;
   opacity: 0.7;
   background-size: 100%;
   border-radius: 50%;
@@ -33,8 +50,8 @@
 
 .review-buttons {
   display: flex;
-  align-items: center; /* Vertically aligns buttons */
-  gap: 0.5rem; /* Adds spacing between buttons */
+  align-items: center; /* vertically aligns buttons */
+  gap: 0.5rem; /* adds spacing between buttons */
 }
 
 .flash-message {
@@ -46,6 +63,6 @@
   padding: 1rem 2rem;
   border-radius: 0.25rem;
   min-width: 800px;
-  max-width: 80%;;
+  max-width: 80%;
   text-align: left;
 }

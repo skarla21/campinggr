@@ -1,37 +1,43 @@
 <% layout("layouts/boilerplate") %>
 <link rel="stylesheet" href="/stylesheets/campIndex.css" />
 
-<div id="map-container">
-  <div id="cluster-map"></div>
-</div>
+<div class="container-fluid px-0">
+  <div class="row g-0">
+    <!-- map section -->
+    <div id="map-container" class="col-lg-5 col-md-12">
+      <div id="cluster-map"></div>
+    </div>
 
-<div id="campground-list">
-  <h1 class="d-flex justify-content-center mt-3 mb-5">All Campgrounds!</h1>
-  <% for (let campground of campgrounds) { %>
-  <div class="card mb-3">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img
-          crossorigin="anonymous"
-          class="img-fluid campground-img"
-          src="<%= campground.images.length ? campground.images[0].url : 'https://res.cloudinary.com/dlm8y6xd6/image/upload/v1730994499/camping_default_mkky4k.jpg' %>"
-          alt="Campground Image"
-        />
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <a href="/campgrounds/<%= campground._id %>">
-            <h5 class="card-title"><%= campground.title %></h5>
-          </a>
-          <p class="card-text"><%= campground.description %></p>
-          <p class="card-text">
-            <small class="text-secondary"><%= campground.location %></small>
-          </p>
+    <!-- campground list section -->
+    <div id="campground-list" class="col-lg-7 col-md-12 px-3">
+      <h1 class="d-flex justify-content-center mt-3 mb-5">All Campgrounds!</h1>
+      <% for (let campground of campgrounds) { %>
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img
+              crossorigin="anonymous"
+              class="img-fluid campground-img"
+              src="<%= campground.images.length ? campground.images[0].url : 'https://res.cloudinary.com/dlm8y6xd6/image/upload/v1730994499/camping_default_mkky4k.jpg' %>"
+              alt="Campground Image"
+            />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body d-flex flex-column">
+              <a href="/campgrounds/<%= campground._id %>">
+                <h5 class="card-title"><%= campground.title %></h5>
+              </a>
+              <p class="card-text"><%= campground.description %></p>
+              <p class="card-text mt-auto">
+                <small class="text-secondary"><%= campground.location %></small>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
+      <% } %>
     </div>
   </div>
-  <% } %>
 </div>
 
 <script>

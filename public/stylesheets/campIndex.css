@@ -1,41 +1,53 @@
 #map-container {
-    position: fixed;
-    top: 56px; /* Adjusted based on navbar height */
-    bottom: 56px; /* Adjusted based on footer height */
-    left: 0;
-    width: 40%;
-    z-index: 1;
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
-  
+
 #cluster-map {
-    height: calc(100vh - 112px); /* Accounts for navbar and footer */
-    width: 100%;
-    margin: 0;
-    padding: 0;
+  height: calc(100vh - 112px); /* full height minus navbar and footer */
+  width: 100%; /* fill parent width */
+  margin: 0;
+  padding: 0;
 }
-  
+
 #campground-list {
-    margin-left: 40%; /* Align content to the right of the map */
-    padding: 1rem; /* Add padding for spacing */
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  box-sizing: border-box; /* ensures padding doesnt affect total width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-  
-.card .row.g-0 {
-    align-items: flex-start; /* Aligns content to the top */
+
+.card {
+  max-width: 90%; /* restrict card width for consistent alignment */
+  width: 100%; /* make sure cards stretch uniformly */
 }
-  
-.campground-img {
-    object-fit: cover; /* Ensures images fill the image space */
-    width: 100%;
-    height: 200px; /* Set consistent height for images */
-}
-  
-.card-body {
+
+@media (min-width: 992px) {
+  #map-container {
+    position: sticky;
+    top: 56px; /* stick below the navbar */
+    height: calc(100vh - 112px); /* adjust height to remain within viewport */
+  }
+  #campground-list {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Aligns content to the left */
-    justify-content: flex-start; /* Ensures content aligns to the top */
-    padding-top: 0.5rem; /* Adds slight padding */
+    align-items: center;
+    justify-content: flex-start;
+  }
 }
-  
+
+@media (max-width: 991.98px) {
+  #map-container {
+    position: relative;
+    height: auto; /* map adjusts to content height */
+  }
+  #cluster-map {
+    height: 400px; /* limit height for better mobile usability */
+  }
+}
