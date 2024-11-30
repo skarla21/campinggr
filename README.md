@@ -1,4 +1,6 @@
-# [camping.gr!](https://camping-gr.onrender.com/) 🏕️
+# [camping.gr!](https://camping-gr.onrender.com/)
+
+**_initial load may take up to 1 min, due to free Render deploy instance_**
 
 ## Overview:
 
