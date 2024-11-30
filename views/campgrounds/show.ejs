@@ -236,7 +236,7 @@
   const lon = "<%-campground.geometry.coordinates[0]%>";
   const lat = "<%-campground.geometry.coordinates[1]%>";
   const campgroundTitle = "<%-campground.title%>";
-  const campgroundDescription = "<%-campground.description%>";
+  const campgroundDescription = "<%= JSON.stringify(campground.description) %>";
 </script>
 
 <script src="/javascripts/showPageMap.js"></script>
